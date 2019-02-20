@@ -51,7 +51,6 @@ data.forEach(function(marker) {
 
 function formSubmitPopup(event){
     event.preventDefault();
-    
     // AJAX request
     $.ajax({
         type: "POST",
