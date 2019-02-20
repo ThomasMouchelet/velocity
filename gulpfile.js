@@ -22,10 +22,16 @@ gulp.task('sass', function () {
 
 gulp.task("uglifyjs", function () {
   return gulp.src(`${source}/assets/js/*.js`)
-      .pipe(plugins.rename("app.min.js"))
-      .pipe(uglify(/* options */))
+  .pipe(uglify(/* options */))
+  .pipe(plugins.rename("app.min.js"))
       .pipe(gulp.dest(`${destination}/assets/js/`))
       .pipe(browserSync.stream());
+});
+
+gulp.task('concat', function() {
+  return gulp.src(`${source}/assets/js/*.js`)
+    .pipe(plugins.concat('app.js'))
+    .pipe(gulp.dest(`${destination}/assets/js/`));
 });
 
 // Tâche "minify" = minification CSS (destination -> destination)
@@ -40,7 +46,7 @@ gulp.task('minify', function () {
 
 
   // Tâche "build"
-gulp.task('build', ['sass' , 'uglifyjs']);
+gulp.task('build', ['sass' , 'concat']);
 
 // Tâche "prod" = Build + minify
 gulp.task('prod', ['build',  'minify']);
@@ -54,11 +60,11 @@ gulp.task('default', ['build']);
 //     gulp.watch(source + '/assets/sass/*.scss', ['build']);
 //   });
 
-  gulp.task('serve', ['sass', 'uglifyjs'], function() {
+  gulp.task('serve', ['sass', 'concat'], function() {
     browserSync.init({
         server: "./app"
     });
     gulp.watch(`${source}/assets/sass/*.scss`, ['sass']);
-    gulp.watch(`${source}/assets/js/*.js`, ['uglifyjs']);
+    gulp.watch(`${source}/assets/js/*.js`, ['concat']);
     gulp.watch("app/*.html").on('change', browserSync.reload);
 });
