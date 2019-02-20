@@ -4,34 +4,43 @@ var gulp = require('gulp');
 // Include plugins
 var plugins = require('gulp-load-plugins')(); // tous les plugins de package.json
 var browserSync = require('browser-sync').create();
+let uglify = require('gulp-uglify-es').default;
 
 // Variables de chemins
 var source = './app/src'; // dossier de travail
 var destination = './app/dist'; // dossier à livrer
 
 gulp.task('sass', function () {
-    return gulp.src(source + '/assets/sass/style.scss')
+    return gulp.src(`${source}/assets/sass/style.scss`)
         .pipe(plugins.sass())
         .pipe(plugins.csscomb())
         .pipe(plugins.cssbeautify({indent: '  '}))
         .pipe(plugins.autoprefixer())
-        .pipe(gulp.dest(destination + '/assets/css/'))
+        .pipe(gulp.dest(`${destination}/assets/css/`))
         .pipe(browserSync.stream());
+});
+
+gulp.task("uglifyjs", function () {
+  return gulp.src(`${source}/assets/js/*.js`)
+      .pipe(plugins.rename("app.min.js"))
+      .pipe(uglify(/* options */))
+      .pipe(gulp.dest(`${destination}/assets/js/`))
+      .pipe(browserSync.stream());
 });
 
 // Tâche "minify" = minification CSS (destination -> destination)
 gulp.task('minify', function () {
-    return gulp.src(destination + '/assets/css/*.css')
+    return gulp.src(`${destination}/assets/css/*.css`)
       .pipe(plugins.csso())
       .pipe(plugins.rename({
         suffix: '.min'
       }))
-      .pipe(gulp.dest(destination + '/assets/css/'));
+      .pipe(gulp.dest(`${destination}/assets/css/`));
   });
 
 
   // Tâche "build"
-gulp.task('build', ['sass']);
+gulp.task('build', ['sass' , 'uglifyjs']);
 
 // Tâche "prod" = Build + minify
 gulp.task('prod', ['build',  'minify']);
@@ -49,6 +58,7 @@ gulp.task('default', ['build']);
     browserSync.init({
         server: "./app"
     });
-    gulp.watch(source + "/assets/sass/*.scss", ['sass']);
+    gulp.watch(`${source}/assets/sass/*.scss`, ['sass']);
+    gulp.watch(`${source}/assets/js/*.js`, ['uglifyjs']);
     gulp.watch("app/*.html").on('change', browserSync.reload);
 });
