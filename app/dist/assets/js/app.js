@@ -71,7 +71,7 @@ $("#formLogin").on("submit", function(event){
     // Ajax request (checkUser.php)
     $.ajax({
         type: "post",
-        url: `${urlAPI}/index.php`,
+        url: `${urlAPI}/checkUser.php`,
         data: serializeFormLogin,
         success: function(data){
             console.log(data);
