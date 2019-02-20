@@ -28,11 +28,7 @@ gulp.task("uglifyjs", function () {
       .pipe(browserSync.stream());
 });
 
-gulp.task('concat', function() {
-  return gulp.src(`${source}/assets/js/*.js`)
-    .pipe(plugins.concat('app.js'))
-    .pipe(gulp.dest(`${destination}/assets/js/`));
-});
+
 
 // Tâche "minify" = minification CSS (destination -> destination)
 gulp.task('minify', function () {
@@ -59,6 +55,12 @@ gulp.task('default', ['build']);
 // gulp.task('watch', function () {
 //     gulp.watch(source + '/assets/sass/*.scss', ['build']);
 //   });
+
+gulp.task('concat', function() {
+  return gulp.src(`${source}/assets/js/*.js`)
+    .pipe(plugins.concat('app.js'))
+    .pipe(gulp.dest(`${destination}/assets/js/`));
+});
 
   gulp.task('serve', ['sass', 'concat'], function() {
     browserSync.init({

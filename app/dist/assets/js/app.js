@@ -27,7 +27,7 @@ data = [
 
 // add markers to map
 data.forEach(function(marker) {
-    console.log(marker)  
+    //console.log(marker)  
     // create a HTML element for each feature
     var el = document.createElement('div');
     el.className = 'marker';
@@ -67,7 +67,6 @@ function formSubmitPopup(event){
 $("#formLogin").on("submit", function(event){
     event.preventDefault();
     const serializeFormLogin = $(this).serialize();
-    console.log(serializeFormLogin);
     // Ajax request (checkUser.php)
     $.ajax({
         type: "post",
@@ -75,6 +74,21 @@ $("#formLogin").on("submit", function(event){
         data: serializeFormLogin,
         success: function(data){
             console.log(data);
+            data = JSON.parse(data);
+            console.log(data);
+
+            if(data.username){
+            }
+            $("#formLogin").hide();
+            $("#map").show();
+            
+            var mapDiv = $("#map");
+            var canvasMap = $(".mapboxgl-canvas");
+
+            mapDiv.css("width", "100%");
+            canvasMap.css("width", "100%");
+            map.resize();
+
         }
     })
 })

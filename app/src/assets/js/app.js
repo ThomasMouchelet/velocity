@@ -27,7 +27,7 @@ data = [
 
 // add markers to map
 data.forEach(function(marker) {
-    console.log(marker)  
+    //console.log(marker)  
     // create a HTML element for each feature
     var el = document.createElement('div');
     el.className = 'marker';
