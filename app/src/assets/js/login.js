@@ -12,16 +12,16 @@ $("#formLogin").on("submit", function(event){
             console.log(data);
 
             if(data.username){
+                $("#formLogin").hide();
+                $("#map").show();
+                
+                var mapDiv = $("#map");
+                var canvasMap = $(".mapboxgl-canvas");
+    
+                mapDiv.css("width", "100%");
+                canvasMap.css("width", "100%");
+                map.resize();
             }
-            $("#formLogin").hide();
-            $("#map").show();
-            
-            var mapDiv = $("#map");
-            var canvasMap = $(".mapboxgl-canvas");
-
-            mapDiv.css("width", "100%");
-            canvasMap.css("width", "100%");
-            map.resize();
 
         }
     })
