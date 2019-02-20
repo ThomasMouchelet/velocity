@@ -6,6 +6,8 @@ var map = new mapboxgl.Map({
     zoom: 15
 });
 
+var urlAPI = "http://localhost:8888/Talis-front/velocity/api" ;
+
 data = [
     {
         "address": "Devant entrée de la fac",
@@ -49,9 +51,16 @@ data.forEach(function(marker) {
 
 function formSubmitPopup(event){
     event.preventDefault();
+    
     // AJAX request
+    $.ajax({
+        type: "POST",
+        url: `${urlAPI}/index.php`,
+        data: "test",
+        success: function(data){
+            console.log(data);
+        },
+    })
 }
 
 
-
-// afficher le hello world du php  dans la console avec AJAX
