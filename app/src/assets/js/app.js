@@ -21,8 +21,7 @@ data = [
         "position": {lat: 45.738135, lng: 4.886885},
         "status": "OPEN"
     }
-]
-
+];
 
 // add markers to map
 data.forEach(function(marker) {
@@ -41,9 +40,18 @@ data.forEach(function(marker) {
             <strong>${marker.available_bike_stands}/${marker.bike_stands}</strong>
             <p>${marker.number}</p>
 
-            <form>
+            <form onSubmit="formSubmitPopup(event)">
                 <input type="submit" value="RESERVER">
             </form>
         `))
     .addTo(map);
 });
+
+function formSubmitPopup(event){
+    event.preventDefault();
+    // AJAX request
+}
+
+
+
+// afficher le hello world du php  dans la console avec AJAX

@@ -54,7 +54,7 @@ gulp.task('default', ['build']);
 //     gulp.watch(source + '/assets/sass/*.scss', ['build']);
 //   });
 
-  gulp.task('serve', ['sass'], function() {
+  gulp.task('serve', ['sass', 'uglifyjs'], function() {
     browserSync.init({
         server: "./app"
     });
