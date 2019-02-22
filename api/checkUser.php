@@ -1,16 +1,22 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-
-$user = [];
-
-// Create database in phpMyadmin with user table (id, username, password)
 // Connect to database
-// fetch user in database with SQL request
-
-if( $_POST["username"] == "admin" && $_POST["password"] == "admin"){
-    $user = [
-        "username" => "admin"
-    ];
+try {
+    $db = new PDO('mysql:host=localhost;dbname=velocity', 'root', 'root');
+} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br/>";
+    die();
 }
+// fetch user in database with SQL request
+$q = $db->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+$q->bindParam(":username", $_POST["username"]);
+$q->bindParam(":password", $_POST["password"]);
+$q->execute();
 
-echo json_encode($user);
+$data = $q->fetch(PDO::FETCH_ASSOC);
+
+if( $data ){
+    echo json_encode($data);
+}else{
+    echo json_encode( [] );
+}
