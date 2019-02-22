@@ -1,12 +1,6 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-// Connect to database
-try {
-    $db = new PDO('mysql:host=localhost;dbname=velocity', 'root', 'root');
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
+require "database-connect.php";
+
 // fetch user in database with SQL request
 $q = $db->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
 $q->bindParam(":username", $_POST["username"]);
