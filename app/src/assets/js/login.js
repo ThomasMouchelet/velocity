@@ -11,6 +11,8 @@ $("#formLogin").on("submit", function(event){
             data = JSON.parse(data);
             console.log(data);
 
+            user = data;
+            
             if(data.username){
                 $("#formLogin").hide();
                 $("#map").show();

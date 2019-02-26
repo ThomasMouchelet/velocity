@@ -7,6 +7,7 @@ var map = new mapboxgl.Map({
 });
 
 var urlAPI = "http://localhost:8888/Talis-front/velocity/api" ;
+var user;
 
 data = [
     {
@@ -42,16 +43,19 @@ data.forEach(function(marker) {
             <strong>${marker.available_bike_stands}/${marker.bike_stands}</strong>
             <p>${marker.number}</p>
 
-            <form onSubmit="formSubmitPopup(event)">
+            <form onSubmit="formSubmitPopup(event, ${marker.number})">
                 <input type="submit" value="RESERVER">
             </form>
         `))
     .addTo(map);
 });
 
-function formSubmitPopup(event){
+function formSubmitPopup(event, id_station){
     event.preventDefault();
     // AJAX request
+    console.log(id_station);
+    console.log(user.id);
+
     $.ajax({
         type: "POST",
         url: `${urlAPI}/index.php`,
